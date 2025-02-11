@@ -20,7 +20,7 @@ public class ProductController {
     public String createProductPage(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
-        return "createProduct";
+        return "CreateProduct";
     }
 
     @PostMapping("/create")
@@ -34,5 +34,12 @@ public class ProductController {
         List<Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
         return "productList";
+    }
+
+    @GetMapping("/delete/{productId}")
+    public String deleteProduct(@PathVariable("productId") String productId, Model model) {
+        System.out.println("Deleting product with ID: " + productId);
+        service.delete(productId);
+        return "redirect:/product/list";
     }
 }
