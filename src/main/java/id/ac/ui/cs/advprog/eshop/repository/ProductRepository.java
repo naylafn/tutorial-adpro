@@ -16,6 +16,15 @@ public class ProductRepository {
         if (product.getProductId() == null){
             product.setProductId(String.valueOf(UUID.randomUUID()));
         }
+
+        if (product.getProductQuantity() < 0) {
+            throw new IllegalArgumentException("Product quantity cannot be negative");
+        }
+
+        if (product.getProductName() != null) {
+            String sanitizedName = product.getProductName().replaceAll("[<>%$]", "");
+            product.setProductName(sanitizedName);
+        }
         productData.add(product);
         return product;
     }
@@ -40,7 +49,15 @@ public class ProductRepository {
 
     public Product edit(String productId, Product newProduct) {
         Product productToEdit = findById(productId);
+
         if (productToEdit != null) {
+            if (newProduct.getProductQuantity() < 0) {
+                throw new IllegalArgumentException("Product quantity cannot be negative");
+            }
+            if (newProduct.getProductName() != null) {
+                String sanitizedName = newProduct.getProductName().replaceAll("[<>%$]", "");
+                newProduct.setProductName(sanitizedName);
+            }
             productToEdit.setProductName(newProduct.getProductName());
             productToEdit.setProductQuantity(newProduct.getProductQuantity());
         }
