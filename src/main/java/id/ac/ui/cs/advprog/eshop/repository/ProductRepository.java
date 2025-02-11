@@ -37,4 +37,13 @@ public class ProductRepository {
         Product productToDelete = findById(productId);
         productData.remove(productToDelete);
     }
+
+    public Product edit(String productId, Product newProduct) {
+        Product productToEdit = findById(productId);
+        if (productToEdit != null) {
+            productToEdit.setProductName(newProduct.getProductName());
+            productToEdit.setProductQuantity(newProduct.getProductQuantity());
+        }
+        return productToEdit;
+    }
 }
