@@ -52,3 +52,10 @@ if (product.getProductName() != null) {
 
 **Mistakes I find:**
 - The product ID is not being correctly generated. So I handle it with setting a UUID for every product.
+
+### Reflection 2
+
+1. I can't tell exactly how many a unit test should be made in a class, but the goal is
+to make a unit test of every possible scenarios if necessary, in other words to achieve a high percentage of code coverage. A 100% code coverage doesn't mean that there are no bugs or errors, since it only ensures that most of the code is executed during testing, and doesn't verify if the code behaves correctly or produces the expected results. 
+
+2. If the new functional test suite has the same setup code from ```CreateProductFunctionalTest.java```, it results in unnecessary duplication. Also, the same setup logic appearing in multiple test classes violates the DRY principle and it will certainly reduce the code quality. It would be more efficient to add the additional functional tests within the existing ```CreateProductFunctionalTest.java``` class to reduce duplication and improve maintainability.
