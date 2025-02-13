@@ -36,11 +36,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(String productId) {
+        if (productId == null || productId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Product ID can't be null");
+        }
         productRepository.delete(productId);
     }
 
     @Override
     public Product edit(String productId, Product newProduct) {
+        if (productId == null || productId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Product ID can't be null");
+        }
+        if (newProduct == null) {
+            throw new IllegalArgumentException("Product can't be null");
+        }
         return productRepository.edit(productId, newProduct);
     }
 }
