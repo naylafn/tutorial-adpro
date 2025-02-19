@@ -140,5 +140,73 @@ public class ProductRepositoryTest {
 
         assertEquals(0, products.size());
     }
+    @Test
+    void testEditProduct_NullProduct() {
+        Product product = new Product();
+        product.setProductId(ID);
+        product.setProductName("Original Product");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product editedProduct = productRepository.edit("nonexistent-id", product);
+        assertNull(editedProduct);
+    }
+
+    @Test
+    void testEditProduct_SuccessfulEdit() {
+        Product originalProduct = new Product();
+        originalProduct.setProductId(ID);
+        originalProduct.setProductName("Original Product");
+        originalProduct.setProductQuantity(100);
+        productRepository.create(originalProduct);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductName("Updated Product");
+        updatedProduct.setProductQuantity(200);
+
+        Product editedProduct = productRepository.edit(ID, updatedProduct);
+
+        assertNotNull(editedProduct);
+        assertEquals("Updated Product", editedProduct.getProductName());
+        assertEquals(200, editedProduct.getProductQuantity());
+    }
+
+    @Test
+    void testEditProduct_SanitizeName() {
+        Product originalProduct = new Product();
+        originalProduct.setProductId(ID);
+        originalProduct.setProductName("Original Product");
+        originalProduct.setProductQuantity(100);
+        productRepository.create(originalProduct);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductName("Product<with>special$chars%");
+        updatedProduct.setProductQuantity(200);
+
+        Product editedProduct = productRepository.edit(ID, updatedProduct);
+
+        assertNotNull(editedProduct);
+        assertEquals("Productwithspecialchars", editedProduct.getProductName());
+    }
+
+    @Test
+    void testEditProduct_NullName() {
+        // Create original product
+        Product originalProduct = new Product();
+        originalProduct.setProductId(ID);
+        originalProduct.setProductName("Original Product");
+        originalProduct.setProductQuantity(100);
+        productRepository.create(originalProduct);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductName(null);
+        updatedProduct.setProductQuantity(200);
+
+        Product editedProduct = productRepository.edit(ID, updatedProduct);
+
+        assertNotNull(editedProduct);
+        assertNull(editedProduct.getProductName());
+        assertEquals(200, editedProduct.getProductQuantity());
+    }
 
 }
