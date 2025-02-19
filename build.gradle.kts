@@ -88,5 +88,7 @@ sonar {
         property("sonar.projectKey", "naylafn_tutorial-adpro")
         property("sonar.organization", "naylafn")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.java.coveragePlugin", "jacoco")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
