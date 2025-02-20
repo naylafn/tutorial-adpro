@@ -69,6 +69,16 @@ public class ProductRepositoryTest {
         assertFalse(productIterator.hasNext());
     }
 
+
+    @Test
+    void testCreateProductWithNullName() {
+        Product product = new Product();
+        product.setProductName(null);
+
+        Product createdProduct = productRepository.create(product);
+
+        assertNull(createdProduct.getProductName());
+    }
     @Test
     void testCreateProduct_NegativeQuantity() {
         Product product = new Product();
@@ -80,6 +90,16 @@ public class ProductRepositoryTest {
         });
 
         assertEquals("Product quantity cannot be negative", exception.getMessage());
+    }
+    @Test
+    void testCreateProductWithName() {
+        Product product = new Product();
+        product.setProductName("Ini Nama");
+
+        Product createdProduct = productRepository.create(product);
+
+        assertNotNull(createdProduct.getProductName());
+        assertEquals("Ini Nama", createdProduct.getProductName());
     }
     @Test
     public void testEditProduct() {
@@ -191,7 +211,6 @@ public class ProductRepositoryTest {
 
     @Test
     void testEditProduct_NullName() {
-        // Create original product
         Product originalProduct = new Product();
         originalProduct.setProductId(ID);
         originalProduct.setProductName("Original Product");
