@@ -18,7 +18,7 @@ class ProductRepositoryTest {
     @InjectMocks
     ProductRepository productRepository;
 
-    final String Id = "ab558e9f-1c39-460e-8860-71af6af63bd6";
+    final String id = "ab558e9f-1c39-460e-8860-71af6af63bd6";
     @BeforeEach
     void setUp() {
         // This method is intentionally left empty.
@@ -26,7 +26,7 @@ class ProductRepositoryTest {
     @Test
     void testCreateAndFind() {
         Product product = new Product();
-        product.setProductId(Id);
+        product.setProductId(id);
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
         productRepository.create(product);
@@ -48,7 +48,7 @@ class ProductRepositoryTest {
     @Test
     void testFindAllIfMoreThanOneProduct() {
         Product product1 = new Product();
-        product1.setProductId(Id);
+        product1.setProductId(id);
         product1.setProductName("Sampo Cap Bambang");
         product1.setProductQuantity(100);
         productRepository.create(product1);
@@ -103,7 +103,7 @@ class ProductRepositoryTest {
     @Test
     void testEditProduct() {
         Product newProduct = new Product();
-        newProduct.setProductId(Id);
+        newProduct.setProductId(id);
         newProduct.setProductName("Updated Product");
         newProduct.setProductQuantity(100);
         Product savedProduct = productRepository.create(newProduct);
@@ -130,11 +130,11 @@ class ProductRepositoryTest {
     @Test
     void testDeleteProduct() {
         Product product = new Product();
-        product.setProductId(Id);
+        product.setProductId(id);
         product.setProductName("Deleted Product");
         product.setProductQuantity(100);
         productRepository.create(product);
-        productRepository.delete(Id);
+        productRepository.delete(id);
 
         Iterator <Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
@@ -152,7 +152,7 @@ class ProductRepositoryTest {
     }
     @Test
     void testDeleteProduct_EmptyRepository() {
-        productRepository.delete(Id);
+        productRepository.delete(id);
         Iterator<Product> iterator = productRepository.findAll();
         List<Product> products = new ArrayList<>();
         iterator.forEachRemaining(products::add);
@@ -162,7 +162,7 @@ class ProductRepositoryTest {
     @Test
     void testEditProduct_NullProduct() {
         Product product = new Product();
-        product.setProductId(Id);
+        product.setProductId(id);
         product.setProductName("Original Product");
         product.setProductQuantity(100);
         productRepository.create(product);
@@ -174,7 +174,7 @@ class ProductRepositoryTest {
     @Test
     void testEditProduct_SuccessfulEdit() {
         Product originalProduct = new Product();
-        originalProduct.setProductId(Id);
+        originalProduct.setProductId(id);
         originalProduct.setProductName("Original Product");
         originalProduct.setProductQuantity(100);
         productRepository.create(originalProduct);
@@ -183,7 +183,7 @@ class ProductRepositoryTest {
         updatedProduct.setProductName("Updated Product");
         updatedProduct.setProductQuantity(200);
 
-        Product editedProduct = productRepository.edit(Id, updatedProduct);
+        Product editedProduct = productRepository.edit(id, updatedProduct);
 
         assertNotNull(editedProduct);
         assertEquals("Updated Product", editedProduct.getProductName());
@@ -193,7 +193,7 @@ class ProductRepositoryTest {
     @Test
     void testEditProduct_SanitizeName() {
         Product originalProduct = new Product();
-        originalProduct.setProductId(Id);
+        originalProduct.setProductId(id);
         originalProduct.setProductName("Original Product");
         originalProduct.setProductQuantity(100);
         productRepository.create(originalProduct);
@@ -202,7 +202,7 @@ class ProductRepositoryTest {
         updatedProduct.setProductName("Product<with>special$chars%");
         updatedProduct.setProductQuantity(200);
 
-        Product editedProduct = productRepository.edit(Id, updatedProduct);
+        Product editedProduct = productRepository.edit(id, updatedProduct);
 
         assertNotNull(editedProduct);
         assertEquals("Productwithspecialchars", editedProduct.getProductName());
@@ -211,7 +211,7 @@ class ProductRepositoryTest {
     @Test
     void testEditProduct_NullName() {
         Product originalProduct = new Product();
-        originalProduct.setProductId(Id);
+        originalProduct.setProductId(id);
         originalProduct.setProductName("Original Product");
         originalProduct.setProductQuantity(100);
         productRepository.create(originalProduct);
@@ -220,7 +220,7 @@ class ProductRepositoryTest {
         updatedProduct.setProductName(null);
         updatedProduct.setProductQuantity(200);
 
-        Product editedProduct = productRepository.edit(Id, updatedProduct);
+        Product editedProduct = productRepository.edit(id, updatedProduct);
 
         assertNotNull(editedProduct);
         assertNull(editedProduct.getProductName());
