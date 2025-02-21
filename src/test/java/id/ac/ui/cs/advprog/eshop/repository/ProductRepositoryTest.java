@@ -122,9 +122,8 @@ public class ProductRepositoryTest {
         updatedProduct.setProductName("Sampo Cap Jay");
         updatedProduct.setProductQuantity(-1);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            productRepository.edit(product.getProductId(), updatedProduct);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> productRepository.edit(product.getProductId(), updatedProduct));
 
         assertEquals("Product quantity cannot be negative", exception.getMessage());
     }
