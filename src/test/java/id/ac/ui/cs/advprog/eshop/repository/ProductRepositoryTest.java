@@ -12,22 +12,21 @@ import java.util.List;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
-public class ProductRepositoryTest {
+class ProductRepositoryTest {
     @InjectMocks
     ProductRepository productRepository;
-    
-    final String ID = "ab558e9f-1c39-460e-8860-71af6af63bd6";
+
+    final String Id = "ab558e9f-1c39-460e-8860-71af6af63bd6";
     @BeforeEach
     void setUp() {
+        // This method is intentionally left empty.
     }
     @Test
     void testCreateAndFind() {
         Product product = new Product();
-        product.setProductId(ID);
+        product.setProductId(Id);
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
         productRepository.create(product);
@@ -49,7 +48,7 @@ public class ProductRepositoryTest {
     @Test
     void testFindAllIfMoreThanOneProduct() {
         Product product1 = new Product();
-        product1.setProductId(ID);
+        product1.setProductId(Id);
         product1.setProductName("Sampo Cap Bambang");
         product1.setProductQuantity(100);
         productRepository.create(product1);
@@ -102,9 +101,9 @@ public class ProductRepositoryTest {
         assertEquals("Ini Nama", createdProduct.getProductName());
     }
     @Test
-    public void testEditProduct() {
+    void testEditProduct() {
         Product newProduct = new Product();
-        newProduct.setProductId(ID);
+        newProduct.setProductId(Id);
         newProduct.setProductName("Updated Product");
         newProduct.setProductQuantity(100);
         Product savedProduct = productRepository.create(newProduct);
@@ -122,25 +121,26 @@ public class ProductRepositoryTest {
         updatedProduct.setProductName("Sampo Cap Jay");
         updatedProduct.setProductQuantity(-1);
 
+        String productId = product.getProductId();
         Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> productRepository.edit(product.getProductId(), updatedProduct));
+                () -> productRepository.edit(productId, updatedProduct));
 
         assertEquals("Product quantity cannot be negative", exception.getMessage());
     }
     @Test
-    public void testDeleteProduct() {
+    void testDeleteProduct() {
         Product product = new Product();
-        product.setProductId(ID);
+        product.setProductId(Id);
         product.setProductName("Deleted Product");
         product.setProductQuantity(100);
         productRepository.create(product);
-        productRepository.delete(ID);
+        productRepository.delete(Id);
 
         Iterator <Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
     }
     @Test
-    public void testDeleteProduct_ProductNotFound() {
+    void testDeleteProduct_ProductNotFound() {
         String nonExistentId = "666";
         productRepository.delete(nonExistentId);
 
@@ -151,8 +151,8 @@ public class ProductRepositoryTest {
         assertEquals(0, products.size());
     }
     @Test
-    public void testDeleteProduct_EmptyRepository() {
-        productRepository.delete(ID);
+    void testDeleteProduct_EmptyRepository() {
+        productRepository.delete(Id);
         Iterator<Product> iterator = productRepository.findAll();
         List<Product> products = new ArrayList<>();
         iterator.forEachRemaining(products::add);
@@ -162,7 +162,7 @@ public class ProductRepositoryTest {
     @Test
     void testEditProduct_NullProduct() {
         Product product = new Product();
-        product.setProductId(ID);
+        product.setProductId(Id);
         product.setProductName("Original Product");
         product.setProductQuantity(100);
         productRepository.create(product);
@@ -174,7 +174,7 @@ public class ProductRepositoryTest {
     @Test
     void testEditProduct_SuccessfulEdit() {
         Product originalProduct = new Product();
-        originalProduct.setProductId(ID);
+        originalProduct.setProductId(Id);
         originalProduct.setProductName("Original Product");
         originalProduct.setProductQuantity(100);
         productRepository.create(originalProduct);
@@ -183,7 +183,7 @@ public class ProductRepositoryTest {
         updatedProduct.setProductName("Updated Product");
         updatedProduct.setProductQuantity(200);
 
-        Product editedProduct = productRepository.edit(ID, updatedProduct);
+        Product editedProduct = productRepository.edit(Id, updatedProduct);
 
         assertNotNull(editedProduct);
         assertEquals("Updated Product", editedProduct.getProductName());
@@ -193,7 +193,7 @@ public class ProductRepositoryTest {
     @Test
     void testEditProduct_SanitizeName() {
         Product originalProduct = new Product();
-        originalProduct.setProductId(ID);
+        originalProduct.setProductId(Id);
         originalProduct.setProductName("Original Product");
         originalProduct.setProductQuantity(100);
         productRepository.create(originalProduct);
@@ -202,7 +202,7 @@ public class ProductRepositoryTest {
         updatedProduct.setProductName("Product<with>special$chars%");
         updatedProduct.setProductQuantity(200);
 
-        Product editedProduct = productRepository.edit(ID, updatedProduct);
+        Product editedProduct = productRepository.edit(Id, updatedProduct);
 
         assertNotNull(editedProduct);
         assertEquals("Productwithspecialchars", editedProduct.getProductName());
@@ -211,7 +211,7 @@ public class ProductRepositoryTest {
     @Test
     void testEditProduct_NullName() {
         Product originalProduct = new Product();
-        originalProduct.setProductId(ID);
+        originalProduct.setProductId(Id);
         originalProduct.setProductName("Original Product");
         originalProduct.setProductQuantity(100);
         productRepository.create(originalProduct);
@@ -220,7 +220,7 @@ public class ProductRepositoryTest {
         updatedProduct.setProductName(null);
         updatedProduct.setProductQuantity(200);
 
-        Product editedProduct = productRepository.edit(ID, updatedProduct);
+        Product editedProduct = productRepository.edit(Id, updatedProduct);
 
         assertNotNull(editedProduct);
         assertNull(editedProduct.getProductName());

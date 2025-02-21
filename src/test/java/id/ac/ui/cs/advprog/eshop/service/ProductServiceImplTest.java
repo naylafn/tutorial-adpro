@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -132,8 +131,9 @@ class ProductServiceImplTest {
 
     @Test
     void testEdit_NullProduct() {
+        String productId = product.getProductId();
         assertThrows(IllegalArgumentException.class, () -> {
-            productService.edit(product.getProductId(), null);
+            productService.edit(productId, null);
         });
     }
 }

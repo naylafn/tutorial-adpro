@@ -12,11 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class HomeControllerTest {
 
     private MockMvc mockMvc;
-    private HomeController homeController;
 
     @BeforeEach
     void setUp() {
-        homeController = new HomeController();
+        HomeController homeController = new HomeController();
         mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
     }
 

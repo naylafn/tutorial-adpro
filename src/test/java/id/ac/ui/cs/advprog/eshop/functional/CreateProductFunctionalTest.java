@@ -30,7 +30,7 @@ class CreateProductFunctionalTest {
     }
 
     @Test
-    void createProductPage_IsCorrect(ChromeDriver driver) throws Exception {
+    void createProductPage_IsCorrect(ChromeDriver driver) {
         driver.get(baseUrl + "/product/create");
         String pageTitle = driver.getTitle();
 
@@ -38,7 +38,7 @@ class CreateProductFunctionalTest {
     }
 
     @Test
-    void testCreateProduct_Success(ChromeDriver driver) throws Exception {
+    void testCreateProduct_Success(ChromeDriver driver) {
         driver.get(String.format("http://localhost:%d/product/create", serverPort));
 
         WebElement nameInput = driver.findElement(By.id("nameInput"));
@@ -51,7 +51,9 @@ class CreateProductFunctionalTest {
         WebElement submitButton = driver.findElement(By.cssSelector("button[type='submit']"));
         submitButton.click();
 
-        assertTrue(driver.getCurrentUrl().contains("/product/list"));
+        String currentUrl = driver.getCurrentUrl();
+        assertNotNull(currentUrl, "Current URL should not be null");
+        assertTrue(currentUrl.contains("/product/list"));
 
         String productName = driver.findElement(By.xpath("//tbody/tr[1]/td[1]")).getText();
         String productQuantity = driver.findElement(By.xpath("//tbody/tr[1]/td[2]")).getText();
