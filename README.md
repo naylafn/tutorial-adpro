@@ -1,7 +1,7 @@
 # Tutorial Pemrograman Lanjut
 ## Nayla Farah Nida - 2306213426
 
-🔗[Eshop Deployment](adpro-naylafarah.koyeb.app/)
+🔗[Eshop Deployment](https://adpro-naylafarah.koyeb.app/)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=naylafn_tutorial-adpro&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=naylafn_tutorial-adpro)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=naylafn_tutorial-adpro&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=naylafn_tutorial-adpro)
