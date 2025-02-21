@@ -65,7 +65,7 @@ class ProductControllerTest {
 
         verify(service).findAll();
         verify(model).addAttribute("products", products);
-        assertEquals("productList", viewName);
+        assertEquals("ProductList", viewName);
     }
 
     @Test
