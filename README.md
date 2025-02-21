@@ -76,7 +76,52 @@ to make a unit test for every possible scenarios if necessary. In other words, w
 
 ### Reflection
 
-1. While improving my project's code coverage, I found a few issues since I was only writing tests for uncovered code based on my JaCoCo report. However, I did notice some minor code quality issues, such as unused imports and unnecessary comments. To address these, I removed any redundant imports to keep the codebase clean and deleted unnecessary comments to improve readability. Additionally, I ensured that the new test cases followed best practices, such as meaningful names and proper test coverage for edge cases. There might still be some inconsistencies or smelly code that got overlooked, but overall I believe the code quality is pretty good.
+1. While improving my project's code coverage, I found a few issues since I was only writing tests for uncovered code based on my JaCoCo report. However, I did notice some minor code quality issues, such as unused imports and unnecessary comments. To address these, I removed any redundant imports to keep the codebase clean and deleted unnecessary comments to improve readability. Additionally, I ensured that the new test cases followed best practices, such as meaningful names and proper test coverage for edge cases. There might still be some inconsistencies or smelly code that got overlooked, but overall I believe the code quality is pretty good. 
+
+**Update,** I have fixed all the code smells :D
+
+Here are some issues I encountered:
+
+**Remove some field injection and use constructor injection instead**
+
+before:
+``` java
+@Autowired
+private ProductService service;
+```
+
+after:
+``` java
+private final ProductService service;
+    
+    @Autowired
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
+```
+         
+**Refactor the code of the lambda to have only one invocation possibly throwing a runtime exception**
+
+before:
+```java
+Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+   productRepository.edit(product.getProductId(), updatedProduct);
+});
+```
+
+after:
+```java
+Exception exception = assertThrows(IllegalArgumentException.class,
+   () -> productRepository.edit(product.getProductId(), updatedProduct));
+```
+
+**Add a nested comment explaining why the setup() method is empty**
+```java
+@BeforeEach
+void setUp() {
+   // This method is intentionally left empty.
+}
+```
 
 2. Yes, I think the current implementation aligns with the concept of CI and CD. Continuous Integration (CI) involves implementation and testing, and I’m using ```ci.yml```, ```scorecard.yml```, and ```sonarcloud.yml``` to automatically test my code on push and pull requests. Continuous deployment (CD) involves deployment and maintenance, I use Koyeb to automatically deploy my app on push and pull request. Overall, my setup that automates testing and deployment is working well, so I'd say that this implementation is aligning with CI/CD principles :D
    
