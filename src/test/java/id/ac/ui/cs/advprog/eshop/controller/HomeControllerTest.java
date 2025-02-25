@@ -23,6 +23,6 @@ class HomeControllerTest {
     void homePage_ShouldReturnHomePageView() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("HomePage"));
+                .andExpect(view().name("homePage"));
     }
 }
