@@ -126,3 +126,35 @@ void setUp() {
 2. Yes, I think the current implementation aligns with the concept of CI and CD. Continuous Integration (CI) involves implementation and testing, and I’m using ```ci.yml```, ```scorecard.yml```, and ```sonarcloud.yml``` to automatically test my code on push and pull requests. Continuous deployment (CD) involves deployment and maintenance, I use Koyeb to automatically deploy my app on push and pull request. Overall, my setup that automates testing and deployment is working well, so I'd say that this implementation is aligning with CI/CD principles :D
    
 </details>
+
+<details>
+   <summary>Module 3</summary>
+
+   ### Reflection
+
+   1. SOLID principles I applied to my project:
+
+
+   **Single Responsibility Principle (SRP)**: Separate the ```ProductController``` and ```CarController``` classes. Each controller should handle different concerns.
+
+   ```ProductController```: Products in general
+
+   ```CarController```: Products specifically for cars
+
+   **Open Closed Principle (OCP)**: OCP states that class should be open for extension but closed for modification. The use of ```CarService``` as an interface for ```CarServiceImpl``` ensure that new behaviors can be added by creating new implementations without modifying the existing code.
+
+   **Liskov Substitution Principle (LSP)**: LSP states that subtypes must be substitutable for their base types without altering the correctness of the program. I remove the inheritance between ```CarController``` and ```ProductController```, because the have different behavior thus forcing ```CarController``` to inherit unnecessary behaviors
+
+   **Interface Segregation Principle (ISP)**: ISP states that clients should not be forced to depend on interfaces they do not use. ```CarService``` interface is reasonably focused on car-specific operations and doesn't contain any methods that wouldn't be needed by classes implementing it.
+
+   **Dependency Inversion Principle (DIP)**: DIP states that high-level modules should not depend on low-level modules, both should depend on abstractions (interfaces). Before solid, ```CarServiceImpl``` directly depends on ```CarRepository``` class rather than an interface. If ```CarRepository changes```, ```CarServiceImpl``` also needs modification. I change it so that ```CarServiceImpl``` depends on ```CarService``` interface.
+
+   2. Advantages of applying SOLID principles:
+
+   SOLID principles improve code quality, maintainability, and scalability. It ensures that modifying or extending my project doesn’t require changing the existing codebase. For example, with DIP ```CarServiceImpl``` depends on abstraction rather than concrete implementations, which makes it easier to mock dependencies for testing without needing a real database connection.
+   
+   3. Disadvantages of not applying SOLID principles:
+
+   Not applying SOLID principles can lead to fragile and hard-to-maintain code, making future modifications risky and time-consuming. For example, without SRP classes become too dependent on multiple responsibilities, making them harder to debug or modify. Without OCP, changes to one part of the code require modifications across multiple files. Without DIP, classes are tightly coupled to implementations rather than abstractions, making future modifications difficult.
+   
+</details>
