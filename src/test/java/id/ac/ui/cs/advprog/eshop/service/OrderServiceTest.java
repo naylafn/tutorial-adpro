@@ -19,12 +19,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderServiceImplTest {
+public class OrderServiceTest {
     @InjectMocks
     OrderServiceImpl orderService;
 
     @Mock
     OrderRepository orderRepository;
+
     List<Order> orders;
 
     @BeforeEach
