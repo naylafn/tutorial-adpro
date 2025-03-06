@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PaymentTest {
 
-    private HashMap<String, String> paymentData;
+    private Map<String, String> paymentData;
     private Order order;
 
     @BeforeEach
@@ -144,6 +145,7 @@ public class PaymentTest {
         setUpValidBankTransfer();
         paymentData.put("referenceCode", "");
         Payment payment = new Payment("7ff4472c-9f47-4612-9a7c-e4ea361df456", order, "bankTransfer", paymentData);
+        String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
         assertEquals("REJECTED", payment.getStatus());
@@ -155,6 +157,7 @@ public class PaymentTest {
         setUpValidBankTransfer();
         paymentData.put("referenceCode", null);
         Payment payment = new Payment("7ff4472c-9f47-4612-9a7c-e4ea361df456", order, "bankTransfer", paymentData);
+        String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
         assertEquals("REJECTED", payment.getStatus());
@@ -164,7 +167,7 @@ public class PaymentTest {
     @Test
     public void testCreatePaymentValidBankTransfer(){
         setUpValidBankTransfer();
-        Payment payment = new Payment("7ff4472c-9f47-4612-9a7c-e4ea361df456", order, "voucherCode", paymentData);
+        Payment payment = new Payment("7ff4472c-9f47-4612-9a7c-e4ea361df456", order, "bankTransfer", paymentData);
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
