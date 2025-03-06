@@ -158,3 +158,11 @@ void setUp() {
    Not applying SOLID principles can lead to fragile and hard-to-maintain code, making future modifications risky and time-consuming. For example, without SRP classes become too dependent on multiple responsibilities, making them harder to debug or modify. Without OCP, changes to one part of the code require modifications across multiple files. Without DIP, classes are tightly coupled to implementations rather than abstractions, making future modifications difficult.
    
 </details>
+
+<details>
+   <summary>Module 4</summary>
+
+   1. I think the current TDD flow is useful enough for me as it helps me maintain test coverage. TDD flow helps me find bugs or errors I could've missed by making a scenario first hand, so maybe it could be more effective if there are more edge cases. However, since I am still new to TDD, I spent a lot of time deciding which tests to create and determining whether they were sufficient.
+
+   2. Reflecting on the unit tests I created in the tutorial, I think they already followed the F.I.R.S.T principle. The tests run quickly, efficiently and independently. They are also repeatable, producing the same results consistently. 
+</details>
