@@ -1,10 +1,9 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
-import enums.OrderStatus;
+import enums.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ public class Payment {
     String method;
     Map<String, String> paymentData;
     String status;
-    String[] methodList = {"voucherCode", "bankTransfer"};
 
     public Payment(String id, Order order, String method, Map<String, String> paymentData) {
         this.id = id;
@@ -24,21 +22,27 @@ public class Payment {
         this.paymentData = new HashMap<>(paymentData);
         this.status = "PENDING";
 
-        if(Arrays.stream(methodList).noneMatch(item -> item.equals(method))) {
-            throw new IllegalArgumentException("Invalid method");
-        } else {
-            this.method = method;
+        if(PaymentMethod.contains(method)) {
             validateMethod(method);
+        } else {
+            throw new IllegalArgumentException("Invalid method: " + method);
         }
     }
 
     public void validateMethod(String method){
         boolean isValid = false;
 
-        if(method.equals("voucherCode")){
-             isValid = validateVoucherCode();
-        } else if(method.equals("bankTransfer")){
-            isValid = validateBankTransfer();
+        switch (PaymentMethod.valueOf(method)) {
+            case PaymentMethod.VOUCHER_CODE:
+                isValid = validateVoucherCode();
+                break;
+
+            case PaymentMethod.BANK_TRANSFER:
+                isValid = validateBankTransfer();
+                break;
+
+            default:
+                break;
         }
 
         if(isValid){
