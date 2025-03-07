@@ -4,7 +4,8 @@ import enums.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import enums.*;
+import enums.PaymentStatus;
+import enums.PaymentMethod;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), orderStatus);
     }
 
@@ -71,7 +72,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), orderStatus);
     }
 
@@ -84,7 +85,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), orderStatus);
     }
 
@@ -97,7 +98,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), orderStatus);
     }
 
@@ -108,7 +109,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
         assertEquals(OrderStatus.SUCCESS.getValue(), orderStatus);
     }
 
@@ -121,7 +122,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), orderStatus);
     }
 
@@ -146,7 +147,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), orderStatus);
     }
 
@@ -158,7 +159,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("REJECTED", payment.getStatus());
+        assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), orderStatus);
     }
 
@@ -169,7 +170,7 @@ public class PaymentTest {
         String orderStatus = payment.getOrder().getStatus();
 
         assertSame(payment.getOrder(), order);
-        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
         assertEquals(OrderStatus.SUCCESS.getValue(), orderStatus);
     }
 }

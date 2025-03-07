@@ -20,7 +20,7 @@ public class Payment {
         this.order = order;
         this.method = method;
         this.paymentData = new HashMap<>(paymentData);
-        this.status = "PENDING";
+        this.status = PaymentStatus.PENDING.getValue();
 
         if(PaymentMethod.contains(method)) {
             validateMethod(method);
@@ -46,10 +46,10 @@ public class Payment {
         }
 
         if(isValid){
-            this.status = "SUCCESS";
+            this.status = PaymentStatus.SUCCESS.getValue();
             this.order.setStatus(OrderStatus.SUCCESS.getValue());
         } else {
-            this.status = "REJECTED";
+            this.status = PaymentStatus.REJECTED.getValue();
             this.order.setStatus(OrderStatus.FAILED.getValue());
         }
     }
