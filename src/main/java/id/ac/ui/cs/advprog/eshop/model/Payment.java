@@ -1,6 +1,11 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
-import enums.*;
+import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
+import id.ac.ui.cs.advprog.eshop.strategy.BankTransferPayment;
+import id.ac.ui.cs.advprog.eshop.strategy.PaymentMethodStrategy;
+import id.ac.ui.cs.advprog.eshop.strategy.VoucherCodePayment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +19,7 @@ public class Payment {
     String method;
     Map<String, String> paymentData;
     String status;
+    private PaymentMethodStrategy paymentStrategy;
 
     public Payment(String id, Order order, String method, Map<String, String> paymentData) {
         this.id = id;
@@ -22,30 +28,28 @@ public class Payment {
         this.paymentData = new HashMap<>(paymentData);
         this.status = PaymentStatus.PENDING.getValue();
 
-        if(PaymentMethod.contains(method)) {
+        if (PaymentMethod.contains(method)) {
             validateMethod(method);
         } else {
             throw new IllegalArgumentException("Invalid method: " + method);
         }
     }
 
-    public void validateMethod(String method){
-        boolean isValid = false;
-
+    public void validateMethod(String method) {
         switch (PaymentMethod.valueOf(method)) {
             case PaymentMethod.VOUCHER_CODE:
-                isValid = validateVoucherCode();
+                this.paymentStrategy = new VoucherCodePayment();
                 break;
 
             case PaymentMethod.BANK_TRANSFER:
-                isValid = validateBankTransfer();
+                this.paymentStrategy = new BankTransferPayment();
                 break;
 
             default:
                 break;
         }
 
-        if(isValid){
+        if (paymentStrategy.validatePayment(paymentData)) {
             this.status = PaymentStatus.SUCCESS.getValue();
             this.order.setStatus(OrderStatus.SUCCESS.getValue());
         } else {
@@ -53,32 +57,4 @@ public class Payment {
             this.order.setStatus(OrderStatus.FAILED.getValue());
         }
     }
-
-    public boolean validateVoucherCode(){
-        String voucherCode = paymentData.get("voucherCode");
-        if(voucherCode == null || voucherCode.isEmpty()){
-            return false;
-        }
-
-        if(voucherCode.length() != 16){
-            return false;
-        } else if (!voucherCode.startsWith("ESHOP")){
-            return false;
-        } else {
-            int counter = 0;
-            for(int i = 0; i < voucherCode.length(); i++){
-                if(Character.isDigit(voucherCode.charAt(i))){
-                    counter++;
-                }
-            }
-            return counter == 8;
-        }
-    }
-
-    public boolean validateBankTransfer(){
-        String bankName = paymentData.get("bankName");
-        String referenceCode = paymentData.get("referenceCode");
-        return bankName != null && referenceCode != null && !bankName.isEmpty() && !referenceCode.isEmpty();
-    }
-
 }
