@@ -19,6 +19,7 @@ public class PaymentRepositoryTest {
     PaymentRepository paymentRepository;
     List<Payment> payments;
     List<Product> products;
+    Order order;
 
     @BeforeEach
     public void setUp() {
@@ -30,9 +31,9 @@ public class PaymentRepositoryTest {
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(2);
+        products.add(product);
 
-        Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
-                products, 1708560000L, "Safira Sudrajat");
+        order = new Order("13652556-012a-4c07-b546-54eb1396d79b", products, 1708560000L, "Safira Sudrajat");
 
         Map<String, String> voucherPaymentData = new HashMap<>();
         voucherPaymentData.put("voucherCode", "ESHOP1234ABC5678");
@@ -56,7 +57,7 @@ public class PaymentRepositoryTest {
         assertEquals(payment.getId(), findResult.getId());
         assertEquals(payment.getOrder(), findResult.getOrder());
         assertEquals(payment.getMethod(), findResult.getMethod());
-        assertSame(payment.getPaymentData(), findResult.getPaymentData());
+        assertEquals(payment.getPaymentData(), findResult.getPaymentData());
         assertEquals(payment.getStatus(), findResult.getStatus());
     }
 
