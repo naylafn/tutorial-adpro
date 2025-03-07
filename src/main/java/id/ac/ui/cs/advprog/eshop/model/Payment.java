@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Getter @Setter
@@ -35,6 +36,24 @@ public class Payment {
         }
     }
 
+    public Payment (String id, Order order, String method, Map<String, String> paymentData, String status) {
+        this(id, order, method, paymentData);
+        this.setStatus(status);
+    }
+
+    public void setStatus(String status) {
+        if (PaymentStatus.contains(status)) {
+            this.status = status;
+            if(status.equals(PaymentStatus.SUCCESS.getValue())) {
+                this.order.setStatus(OrderStatus.SUCCESS.getValue());
+            } else if (status.equals(PaymentStatus.REJECTED.getValue())) {
+                this.order.setStatus(OrderStatus.FAILED.getValue());
+            }
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public void validateMethod(String method) {
         switch (PaymentMethod.valueOf(method)) {
             case PaymentMethod.VOUCHER_CODE:
@@ -50,11 +69,9 @@ public class Payment {
         }
 
         if (paymentStrategy.validatePayment(paymentData)) {
-            this.status = PaymentStatus.SUCCESS.getValue();
-            this.order.setStatus(OrderStatus.SUCCESS.getValue());
+            this.setStatus(PaymentStatus.SUCCESS.getValue());
         } else {
-            this.status = PaymentStatus.REJECTED.getValue();
-            this.order.setStatus(OrderStatus.FAILED.getValue());
+            this.setStatus(PaymentStatus.REJECTED.getValue());
         }
     }
 }
