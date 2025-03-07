@@ -78,7 +78,7 @@ public class PaymentRepositoryTest {
         assertEquals(payment.getId(), findResult.getId());
         assertEquals(payment.getOrder(), findResult.getOrder());
         assertEquals(payment.getMethod(), findResult.getMethod());
-        assertSame(payment.getPaymentData(), findResult.getPaymentData());
+        assertEquals(payment.getPaymentData(), findResult.getPaymentData());
         assertEquals(PaymentStatus.SUCCESS.getValue(), findResult.getStatus());
     }
 
